@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>touch event</title>
+    <style>
+        .box{
+            position: relative;
+            width: 200px; height: 200px;
+            border: 3px solid black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            top: 30vh;
+            left: 30vw;
+        }
+        @keyframes touchmove {
+            0% {          
+                transform: scale(1);
+            }
+
+            50% {           
+                    
+                transform: scale(1.2);
+            }
+
+            100% {        
+                transform: scale(1);
+            }
+        }
+        .box.box_touched{
+            animation-name: touchmove;
+            animation-duration: 3s;
+            animation-iteration-count: infinite;
+        }
+    </style>
+</head>
+<body>
+    <h1>터치 이벤트</h1>
+    <div class="box">
+        <p>나를 터치해 주세요♡</p>
+    </div>
+    <script>
+        var box = document.querySelector('.box')
+        var touch = {
+            start: function(){
+                box.innerHTML = '나를 건드렸군.'
+                console.log('건드려버렸구나.. 네녀석.')
+                this.style.background = 'red'
+                //여기에서의 this는 '부른 주체'가 됨. 따라서 touch가 되겠다
+            },
+            end: function(){
+                box.innerHTML = '..가는 건가.'
+                this.style.background = 'gray'
+                box.classList.remove('box_touched')
+            },
+            move: function(){
+                box.innerHTML = '(그루밍 당하는 중)'
+                this.style.background = 'yellow'
+                box.classList.add('box_touched')
+                console.log('야옹.....')
+            }
+        }
+        //터치 이벤트 리스너 추가
+        box.addEventListener('touchstart', touch.start)
+        box.addEventListener('touchend',touch.end)
+        box.addEventListener('touchmove',touch.move)
+
+    </script>
+</body>
+</html>
